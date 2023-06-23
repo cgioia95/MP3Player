@@ -1,10 +1,10 @@
-from utils.ui import displaySongScreen
+from utils.ui.displaySongFrame import displaySongFrame
 from utils.audio import playSong
-from utils.config import library, searchFrame, currentFrame
+from utils.config import library, searchFrame
 import tkinter as tk
 
-def openDisplayScreen(song):
-    displaySongScreen(song)
+def openSongFrame(song):
+    displaySongFrame(song)
     playSong(song.path)
 
 def searchSongs(search_query):
@@ -12,16 +12,15 @@ def searchSongs(search_query):
 
     # Iterate over the matched items
     for song in songs: 
-        play_button = tk.Button(searchFrame, text=song.title, command=lambda path=song.path: openDisplayScreen(song))
+        play_button = tk.Button(searchFrame, text=song.title, command=lambda path=song.path: openSongFrame(song))
         play_button.pack()
 
-def search(search_entry, search_var, result_frame, library, header_row1, header_row2):
+def search(search_entry, search_var, result_frame):
     search_query = search_entry.get()
     search_type = search_var.get()
 
     if search_type == "Songs":
         searchSongs(search_query)
-
 
     elif search_type == "Artists":
         items = library.items('artist:{}'.format(search_query))
