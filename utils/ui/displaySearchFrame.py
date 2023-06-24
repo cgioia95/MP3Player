@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import ttk
 from utils.config import updateCurrentFrame, searchFrame, library
 from utils.common import search
 
@@ -11,14 +10,34 @@ def displaySearchFrame():
     header_row1.pack()
 
     search_var = tk.StringVar()
+    search_var.set("Songs")
 
-    songs_button = tk.Button(header_row1, text="Songs", command=lambda: (search_var.set("Songs")))
+    def update_button_style(button_name):
+        search_var.set(button_name)
+
+        print(button_name)
+
+        if search_var.get() == "Songs":
+            songs_button.configure(fg="green")  # Update the background color to indicate selection
+            artists_button.configure(fg="black")  # Reset the background color of other buttons
+            albums_button.configure(fg="black")  # Reset the background color of other buttons
+        elif search_var.get() == "Artists":
+            songs_button.configure(fg="black")  # Reset the background color of other buttons
+            artists_button.configure(fg="green")  # Update the background color to indicate selection
+            albums_button.configure(fg="black")  # Reset the background color of other buttons
+        elif search_var.get() == "Albums":
+            songs_button.configure(fg="black")  # Reset the background color of other buttons
+            artists_button.configure(fg="black")  # Reset the background color of other buttons
+            albums_button.configure(fg="green")  # Update the background color to indicate selection
+
+
+    songs_button = tk.Button(header_row1, text="Songs", command=lambda: update_button_style("Songs"), fg="green")
     songs_button.pack(side=tk.LEFT)
 
-    artists_button = tk.Button(header_row1, text="Artists", command=lambda: (search_var.set("Artists")))
+    artists_button = tk.Button(header_row1, text="Artists", command=lambda: update_button_style("Artists"))
     artists_button.pack(side=tk.LEFT)
 
-    albums_button = tk.Button(header_row1, text="Albums", command=lambda: (search_var.set("Albums")))
+    albums_button = tk.Button(header_row1, text="Albums", command=lambda: update_button_style("Albums"))
     albums_button.pack(side=tk.LEFT)
 
     # Header - Row 2 - Search Bar
