@@ -25,7 +25,6 @@ def search_songs(search_query, inner_frame):
 
 def search(search_entry, search_var, inner_frame):
     search_query = search_entry.get()
-    search_query = "time"
     search_type = search_var.get()
 
     if search_type == "Songs":

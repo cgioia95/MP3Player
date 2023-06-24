@@ -7,8 +7,8 @@ import os
 currently_loaded_song = None
 is_playing = False
 progress = 0.0
-current_time = None
-max_time = None
+current_position = 0
+songLength = 0
 
 def playSong(path):
     print(path)
@@ -40,13 +40,12 @@ def pathToFileType(path):
     if ".mp3" in extension:
         return "mp3"
     elif '.flac' in extension:
-        print("EXTENSION2")
         return "flac"
     else: 
         return "UNSUPORTED"
 
 def getSongProgress():
-    global progress
+    global progress, current_position, songLength
     if pygame.mixer.music.get_busy():
         song = None
         fileType = pathToFileType(currently_loaded_song)
@@ -61,8 +60,16 @@ def getSongProgress():
         if is_playing:
             current_position = pygame.mixer.music.get_pos() / 1000
             progress = (current_position / songLength) * 100
-            return progress
+            return current_position, songLength, progress
         else:
-            return progress
+            return current_position, songLength, progress
     else:
-        return progress
+        return current_position, songLength, progress
+
+def teardown():
+    pygame.mixer.music.stop()
+    currently_loaded_song = None
+    is_playing = False
+    progress = 0.0
+    current_position = 0
+    songLength = 0
