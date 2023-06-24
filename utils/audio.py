@@ -1,6 +1,9 @@
 from utils.config import pygame
+from mutagen.mp3 import MP3
+
 
 currently_loaded_song = None
+is_playing = False
 
 def playSong(path):
     global is_playing, currently_loaded_song
@@ -23,3 +26,13 @@ def togglePlay():
         pauseSong()
     else:
         playSong(currently_loaded_song)
+
+def getSongProgress():
+    if pygame.mixer.music.get_busy():
+        song = MP3(currently_loaded_song)
+        songLength = song.info.length
+        current_position = pygame.mixer.music.get_pos() / 1000
+        progress = (current_position / songLength) * 100
+        return progress
+    else:
+        return 0
