@@ -6,6 +6,9 @@ from utils.audio import togglePlay, getSongProgress
 def key_handler(event):
     if event.keysym == 'space':
         togglePlay()
+    elif event.char == 'c':
+        print('c')
+
 
 def update_progress(progress_bar):
     # Get the current progress of the song
